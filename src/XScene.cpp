@@ -45,6 +45,11 @@ bool XScene::mouseDrag( ci::app::MouseEvent event )
 	return deepMouseDrag( event ); // recurses to children
 }
 
+bool XScene::mouseWheel( ci::app::MouseEvent event )
+{
+	return deepMouseWheel( event );
+}
+
 bool XScene::touchesBegan( TouchEvent event )
 {
     bool consumed = true;

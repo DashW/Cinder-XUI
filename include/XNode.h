@@ -204,6 +204,7 @@ public:
     virtual bool mouseDownInternal( ci::app::MouseEvent event ) { return false; }
     virtual bool mouseDragInternal( ci::app::MouseEvent event ) { return false; }
     virtual bool mouseUpInternal( ci::app::MouseEvent event ) { return false; }
+	virtual bool mouseWheelInternal( ci::app::MouseEvent event ) { return false; }
             
     // interactions, one touch at a time
     virtual bool touchBeganInternal( ci::app::TouchEvent::Touch touch ) { return false; }
@@ -229,6 +230,7 @@ public:
 	virtual bool deepMouseDown( ci::app::MouseEvent event );
 	virtual bool deepMouseUp( ci::app::MouseEvent event );
 	virtual bool deepMouseDrag( ci::app::MouseEvent event );
+	virtual bool deepMouseWheel( ci::app::MouseEvent event );
     
     // recurse to children and call touchBegan/Moved/Ended
     // (public so they can be overridden, but generally considered internal)
@@ -260,6 +262,11 @@ public:
 	{
 		return mCbMouseUp.registerCb(std::bind1st(std::mem_fun(callback), obj));
 	}
+	template<typename T>
+	ci::CallbackId registerMouseWheel( T *obj, bool( T::*callback )( XSceneEventRef ) )
+	{
+		return mCbMouseWheel.registerCb( std::bind1st( std::mem_fun( callback ), obj ) );
+	}
 
 	template<typename T>
     ci::CallbackId registerTouchBegan( T *obj, bool (T::*callback)(XSceneEventRef) )
@@ -280,6 +287,7 @@ public:
 	void unregisterMouseDown( ci::CallbackId cbId ) { mCbMouseDown.unregisterCb( cbId ); }
     void unregisterMouseDrag( ci::CallbackId cbId ) { mCbMouseDrag.unregisterCb( cbId ); }
     void unregisterMouseUp( ci::CallbackId cbId ) { mCbMouseUp.unregisterCb( cbId ); }
+	void unregisterMouseWheel( ci::CallbackId cbId ) { mCbMouseWheel.unregisterCb( cbId ); }
 
     void unregisterTouchBegan( ci::CallbackId cbId ) { mCbTouchBegan.unregisterCb( cbId ); }
     void unregisterTouchMoved( ci::CallbackId cbId ) { mCbTouchMoved.unregisterCb( cbId ); }
@@ -292,6 +300,7 @@ public:
 	void dispatchMouseDown( XSceneEventRef eventRef );
 	void dispatchMouseDrag( XSceneEventRef eventRef );
 	void dispatchMouseUp( XSceneEventRef eventRef );
+	void dispatchMouseWheel( XSceneEventRef eventRef );
     void dispatchTouchBegan( XSceneEventRef eventRef );
     void dispatchTouchMoved( XSceneEventRef eventRef );
     void dispatchTouchEnded( XSceneEventRef eventRef );
@@ -336,6 +345,7 @@ protected:
 	ci::CallbackMgr<bool(XSceneEventRef)> mCbMouseDown;
 	ci::CallbackMgr<bool(XSceneEventRef)> mCbMouseDrag;
 	ci::CallbackMgr<bool(XSceneEventRef)> mCbMouseUp;
+	ci::CallbackMgr<bool(XSceneEventRef)> mCbMouseWheel;
 
 	std::map<std::string, XNodeState> mStates;
 };

@@ -15,6 +15,7 @@ public:
 	bool mouseDown( ci::app::MouseEvent event );
     bool mouseUp( ci::app::MouseEvent event );
 	bool mouseDrag( ci::app::MouseEvent event );
+	bool mouseWheel( ci::app::MouseEvent event );
 
     bool touchesBegan( ci::app::TouchEvent event );
     bool touchesMoved( ci::app::TouchEvent event );

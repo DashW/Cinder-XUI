@@ -45,6 +45,12 @@
 
 			sX, sY = 0, 0
 		end
+    
+    function mouseWheel(increment)
+      print("scrolling");
+      this.scaleX = this.scaleX * (1 + (increment/100));
+      this.scaleY = this.scaleY * (1 + (increment/100));
+    end
 
 		]]>
 

@@ -20,6 +20,7 @@ public:
 	bool mouseDownInternal( ci::app::MouseEvent event );
 	bool mouseDragInternal( ci::app::MouseEvent event );
 	bool mouseUpInternal( ci::app::MouseEvent event );
+	bool mouseWheelInternal( ci::app::MouseEvent event );
     
     // touchEnded will only be called for touch IDs that returned true in touchBegan
     // so we need to implement both methods (there's also touchMoved which works the same way)

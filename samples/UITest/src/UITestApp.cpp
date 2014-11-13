@@ -24,6 +24,7 @@ public:
 	void	mouseDown( ci::app::MouseEvent event );
     void	mouseUp( ci::app::MouseEvent event );
 	void	mouseDrag( ci::app::MouseEvent event );
+	void	mouseWheel( ci::app::MouseEvent event );
     
 	void onSceneEvent( std::string event );
     XSceneRef mXSceneRef;
@@ -71,6 +72,11 @@ void UITestApp::mouseUp( ci::app::MouseEvent event )
 void UITestApp::mouseDrag( ci::app::MouseEvent event )
 {
 	mXSceneRef->mouseDrag(event);
+}
+
+void UITestApp::mouseWheel( ci::app::MouseEvent event )
+{
+	mXSceneRef->mouseWheel( event );
 }
 
 void UITestApp::touchesBegan( ci::app::TouchEvent event )

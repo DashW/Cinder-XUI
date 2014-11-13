@@ -49,6 +49,15 @@ bool XRect::mouseUpInternal( ci::app::MouseEvent event )
 		mScript->call("mouseUp", event.getPos().x, event.getPos().y);
     return true;
 }
+bool XRect::mouseWheelInternal( ci::app::MouseEvent event )
+{
+	// In Windows, mouse scroll operations are relative to the origin of the SCREEN,
+	// so they must be transformed to be made relative to the origin of the WINDOW
+	bool hit = hitTest( event.getPos() - event.getWindow()->getPos() );
+	if(hit && mScript)
+		mScript->call( "mouseWheel", event.getWheelIncrement() );
+	return hit;
+}
 
 bool XRect::touchBeganInternal( ci::app::TouchEvent::Touch touch )
 {
